@@ -6,8 +6,12 @@ import EditItemModal from './items/EditItemModal';
 
 const CurrentListItem = ({ currentListItem, departments, currentListID, removeItemFromList }) => {
   const getDeptName = (id) => {
-    let dept = departments.filter(dept => dept.id === id)
-    return dept[0].name;
+    if (id === null) {
+      return 'None';
+    } else {
+      let dept = departments.filter(dept => dept.id === id)
+      return dept[0].name;
+    }
   }
 
   const onRemoveFromList = () => {
@@ -33,7 +37,6 @@ const CurrentListItem = ({ currentListItem, departments, currentListID, removeIt
         <div className="col s3 m4">
           {getDeptName(currentListItem.department)}
         </div>
-        {/* <div className="col s2"></div> */}
         <div className="col s2 m1">
           <a href={`#edit-item-modal-${currentListItem.id}`} className="modal-trigger"><i className="far fa-edit fa-lg indigo-text"></i></a>
           <EditItemModal departments={departments} currentListItem={currentListItem} />

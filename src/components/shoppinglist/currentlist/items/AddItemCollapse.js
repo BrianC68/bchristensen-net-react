@@ -5,6 +5,7 @@ import DepartmentOption from '../departments/DepartmentOption';
 import { addItem } from '../../../../actions/listActions';
 import SavedItemsList from './SavedItemsList';
 import AddDepartmentModal from '../departments/AddDepartmentModal';
+import DepartmentsList from '../departments/DepartmentsList'
 
 const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) => {
   const [item, setItem] = useState('');
@@ -20,8 +21,6 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
       M.toast({ html: '<strong>Please enter an item!</strong>', displayLength: 6000, classes: "red lighten-3 black-text" });
     } else if (quantity === '') {
       M.toast({ html: '<strong>Please enter quantity!</strong>', displayLength: 6000, classes: "red lighten-3 black-text" });
-    } else if (department === '') {
-      M.toast({ html: '<strong>Please select a department!</strong>', displayLength: 6000, classes: "red lighten-3 black-text" });
     } else {
       const newItem = {
         user: localStorage.getItem('user_id'),
@@ -40,7 +39,7 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
   return (
     <div>
       <ul className="collapsible">
-        {/* Add Saved Items */}
+        {/* Saved Items */}
         <li>
           <div className="collapsible-header"><i className="far fa-plus-square fa-2x indigo-text"></i> Saved Items</div>
           <div className="collapsible-body saved-items-collapse">
@@ -83,7 +82,7 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
                 className="browser-default"
                 onChange={e => setDepartment(e.target.value)}
               >
-                <option value="" disabled>Select Department or...</option>
+                <option value="" disabled>Assign Department (optional)</option>
                 {departments.map(dept => <DepartmentOption department={dept} key={dept.id} />)}
               </select>
             </div>
@@ -97,12 +96,26 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
             </div>
           </div>
         </li>
+        {/* Departments collapse */}
+        <li>
+          <div className="collapsible-header">
+            <i className="far fa-plus-square fa-2x indigo-text"></i> Departments
+          </div>
+          <div className="collapsible-body departments-collapse">
+            <ul className="collection">
+              {departments.length === 0 ?
+                <li className="collection-item">
+                  There are no departments associated with this list. You may add departments when you add a new item to the list.
+                 </li>
+                : ''}
+              {departments.map(dept => <DepartmentsList dept={dept} key={dept.id} />)}
+            </ul>
+          </div>
+        </li>
       </ul>
-    </div >
+    </div>
   )
 }
-
-
 
 const mapStateToProps = state => ({
   currentListID: state.list.currentList.id,

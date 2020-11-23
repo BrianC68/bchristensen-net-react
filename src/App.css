@@ -87,7 +87,8 @@
     margin-bottom: 5px;
 }
 
-.collapsible-body.saved-items-collapse {
+.collapsible-body.saved-items-collapse,
+.collapsible-body.departments-collapse {
    padding: 0 !important;
 }
 

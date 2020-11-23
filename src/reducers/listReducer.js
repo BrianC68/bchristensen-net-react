@@ -9,6 +9,8 @@ import {
   REMOVE_ITEM,
   DELETE_ITEM,
   ADD_DEPARTMENT,
+  EDIT_DEPARTMENT,
+  DELETE_DEPARTMENT,
   LISTS_ERROR,
   CLEAR_LISTS_ERROR,
   CLEAR_CURRENT,
@@ -104,7 +106,6 @@ const list = (state = initialState, action) => {
         currentList: {
           ...state.currentList,
           list_items: state.currentList.list_items.filter(item => item.id !== action.payload)
-
         },
         loading: false
       }
@@ -119,6 +120,29 @@ const list = (state = initialState, action) => {
           ]
         },
         loading: false
+      }
+    case EDIT_DEPARTMENT:
+      return {
+        ...state,
+        currentList: {
+          ...state.currentList,
+          departments: [
+            ...state.currentList.departments.map(dept => dept.id === action.payload.id ? action.payload : dept)
+          ]
+        }
+      }
+    case DELETE_DEPARTMENT:
+      return {
+        ...state,
+        currentList: {
+          ...state.currentList,
+          departments: [
+            ...state.currentList.departments.filter(dept => dept.id !== action.payload)
+          ],
+          list_items: [
+            ...state.currentList.list_items.map(item => item.department === action.payload ? { ...item, department: null } : '')
+          ]
+        }
       }
     case CLEAR_CURRENT:
       return {

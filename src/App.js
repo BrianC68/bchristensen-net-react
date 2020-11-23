@@ -17,6 +17,11 @@ const App = () => {
   useEffect(() => {
     // Initializes Materialize JS
     M.AutoInit();
+    // window.beforeunload = (e) => {
+    //   console.log('Stop page reload');
+    //   e.preventDefault();
+    //   e.returnValue = '';
+    // }
   });
 
   return (

@@ -53,9 +53,9 @@ const CurrentList = ({ currentList, clearCurrent, deleteList }) => {
         </li>
         {currentList.list_items.filter(item => item.on_list).length === 0 ?
           <li className="collection-item">Your list is currently empty. Add saved items to your list or add a new item.</li> :
-          ''}
-        {/* Only pass items that are on_list===true */}
-        {currentList.list_items.filter(item => item.on_list).map(item => <CurrentListItem currentListItem={item} departments={currentList.departments} key={item.id} />)}
+          // Only pass items that are on_list===true
+          currentList.list_items.filter(item => item.on_list).map(item => <CurrentListItem currentListItem={item} departments={currentList.departments} key={item.id} />)
+        }
       </ul>
       <AddItemCollapse departments={currentList.departments} savedItems={savedItems} />
     </div>

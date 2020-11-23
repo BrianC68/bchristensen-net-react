@@ -14,8 +14,8 @@ import {
   SET_AUTH_LOADING,
 } from '../actions/types';
 
-// const apiServer = 'http://localhost:8000';
-const apiServer = 'https://api.bchristensen.net';
+const apiServer = 'http://localhost:8000';
+// const apiServer = 'https://api.bchristensen.net';
 
 export const loadUser = () => async dispatch => {
   // if (localStorage.token) {

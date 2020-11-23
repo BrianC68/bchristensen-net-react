@@ -10,6 +10,8 @@ import {
   REMOVE_ITEM,
   DELETE_ITEM,
   ADD_DEPARTMENT,
+  EDIT_DEPARTMENT,
+  DELETE_DEPARTMENT,
   CLEAR_CURRENT,
   LISTS_ERROR,
   CLEAR_LISTS_ERROR,
@@ -23,8 +25,8 @@ const jsonHeader = {
   }
 }
 
-// const apiServer = 'http://127.0.0.1:8000';
-const apiServer = 'https://api.bchristensen.net';
+const apiServer = 'http://127.0.0.1:8000';
+// const apiServer = 'https://api.bchristensen.net';
 
 
 export const getLists = () => async dispatch => {
@@ -188,6 +190,37 @@ export const addDepartment = (data) => async dispatch => {
     dispatch({
       type: ADD_DEPARTMENT,
       payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: LISTS_ERROR,
+      payload: err.response.data
+    })
+  }
+}
+
+export const updateDepartment = (data) => async dispatch => {
+  try {
+    const res = await axios.put(`${apiServer}/api/shopping-list/dept/${data.id}/`, data, jsonHeader);
+
+    dispatch({
+      type: EDIT_DEPARTMENT,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: LISTS_ERROR,
+      payload: err.response.data
+    })
+  }
+}
+
+export const deleteDepartment = (id) => async dispatch => {
+  try {
+    await axios.delete(`${apiServer}/api/shopping-list/dept/${id}/`);
+    dispatch({
+      type: DELETE_DEPARTMENT,
+      payload: id
     })
   } catch (err) {
     dispatch({
