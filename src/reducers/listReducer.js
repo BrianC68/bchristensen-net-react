@@ -3,6 +3,8 @@ import {
   GET_LISTS,
   GET_LIST,
   DELETE_LIST,
+  SORT_LIST,
+  GROUP_LIST_BY_DEPT,
   ADD_ITEM,
   ADD_SAVED_ITEM,
   EDIT_ITEM,
@@ -16,19 +18,20 @@ import {
   CLEAR_CURRENT,
   CLEAR_LISTS,
   SET_LOADING,
+  SET_SORT_ORDER,
 } from '../actions/types';
 
 const initialState = {
   lists: null,
   error: '',
   currentList: null,
-  loading: true
+  loading: true,
+  sort_order: '',
 }
 
 const list = (state = initialState, action) => {
   switch (action.type) {
     case GET_LISTS:
-      // console.log(action.payload);
       return {
         ...state,
         lists: action.payload,
@@ -52,6 +55,71 @@ const list = (state = initialState, action) => {
         ...state,
         lists: state.lists.filter(list => action.payload !== list.id),
         loading: false
+      }
+    case SORT_LIST:
+      return {
+        ...state,
+        currentList: {
+          ...state.currentList,
+          list_items: [
+            ...state.currentList.list_items
+          ].sort((a, b) => {
+            let itemA = a.item.toLowerCase(),
+              itemB = b.item.toLowerCase();
+
+            if (state.sort_order === 'asc') {
+              if (itemA < itemB) {
+                return -1;
+              }
+              if (itemA > itemB) {
+                return 1;
+              }
+            } else {
+              if (itemA < itemB) {
+                return 1;
+              }
+              if (itemA > itemB) {
+                return -1;
+              }
+            }
+            return 0;
+          })
+        }
+      }
+    case GROUP_LIST_BY_DEPT:
+      return {
+        ...state,
+        currentList: {
+          ...state.currentList,
+          list_items: [
+            ...state.currentList.list_items
+          ].sort((a, b) => {
+            let deptA = a.department,
+              deptB = b.department;
+
+            if (state.sort_order === 'asc') {
+              if (deptA < deptB) {
+                return -1;
+              }
+              if (deptA > deptB) {
+                return 1;
+              }
+            } else {
+              if (deptA < deptB) {
+                return 1;
+              }
+              if (deptA > deptB) {
+                return -1;
+              }
+            }
+            return 0;
+          })
+        }
+      }
+    case SET_SORT_ORDER:
+      return {
+        ...state,
+        sort_order: action.payload
       }
     case ADD_ITEM:
       return {
@@ -140,7 +208,7 @@ const list = (state = initialState, action) => {
             ...state.currentList.departments.filter(dept => dept.id !== action.payload)
           ],
           list_items: [
-            ...state.currentList.list_items.map(item => item.department === action.payload ? { ...item, department: null } : '')
+            ...state.currentList.list_items.map(item => item.department === action.payload ? { ...item, department: null } : { ...item })
           ]
         }
       }

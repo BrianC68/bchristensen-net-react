@@ -5,9 +5,9 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 import PropTypes from 'prop-types';
 import CurrentListItem from './CurrentListItem';
 import AddItemCollapse from './items/AddItemCollapse';
-import { clearCurrent, deleteList } from '../../../actions/listActions';
+import { clearCurrent, deleteList, sortList, setSortOrder } from '../../../actions/listActions';
 
-const CurrentList = ({ currentList, clearCurrent, deleteList }) => {
+const CurrentList = ({ currentList, clearCurrent, deleteList, sortList, sort_order, setSortOrder }) => {
   useEffect(() => {
     M.AutoInit();
   })
@@ -28,6 +28,15 @@ const CurrentList = ({ currentList, clearCurrent, deleteList }) => {
     }
   }
 
+  const onSortList = (sortBy) => {
+    if (sortBy === 'item' && sort_order === 'asc') {
+      setSortOrder('desc');
+    } else {
+      setSortOrder('asc');
+    }
+    sortList(sortBy);
+  }
+
   return (
     <div>
       <div>
@@ -41,13 +50,13 @@ const CurrentList = ({ currentList, clearCurrent, deleteList }) => {
         <li className="collection-item">
           <div className="row">
             <div className="col s3 m4">
-              <strong>Item</strong>
+              <strong>Item</strong> <a href="#!" className="indigo-text" onClick={() => onSortList('item')}><i className="fal fa-sort fa-lg"></i></a>
             </div>
             <div className="col s2">
               <strong>Qty</strong>
             </div>
             <div className="col s5 m4">
-              <strong>Dept.</strong>
+              <strong>Dept.</strong> <a href="#!" className="indigo-text" onClick={() => onSortList('dept')}><i className="fal fa-object-group fa-lg"></i></a>
             </div>
           </div>
         </li>
@@ -66,6 +75,13 @@ CurrentList.propTypes = {
   currentList: PropTypes.object.isRequired,
   clearCurrent: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
+  sortList: PropTypes.func.isRequired,
+  // setSortBy: PropTypes.func.isRequired,
+  setSortOrder: PropTypes.func.isRequired,
 }
 
-export default connect(null, { clearCurrent, deleteList })(CurrentList);
+const mapStateToProps = state => ({
+  sort_order: state.list.sort_order
+})
+
+export default connect(mapStateToProps, { clearCurrent, deleteList, sortList, setSortOrder })(CurrentList);

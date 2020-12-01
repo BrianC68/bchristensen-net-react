@@ -47,7 +47,7 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
               {savedItems.length === 0 ?
                 <li className="collection-item">
                   Click &quot;Add New Item&quot; to add an item to your list, it will automatically be saved. Saved items that are
-                  added to your list will not appear here until they are removed from your list.
+                  currently on your list will not appear here until they are removed from your list.
                 </li> : ''}
               {savedItems.map(item => (<SavedItemsList item={item} key={item.id} />))}
             </ul>
@@ -89,7 +89,6 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
             {/* Add new department modal */}
             <div>
               <a className="waves-effect waves-light indigo btn modal-trigger" href="#add-dept-modal">Add New Department</a>
-              <AddDepartmentModal currentListID={currentListID} />
             </div>
             <div className="input-field col s12 right-align">
               <a href="#!" onClick={onAddItem} className="btn-large indigo waves-effect">Add Item</a>
@@ -103,16 +102,20 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
           </div>
           <div className="collapsible-body departments-collapse">
             <ul className="collection">
+              <li className="collection-item">
+                <a className="waves-effect waves-light indigo btn modal-trigger" href="#add-dept-modal">Add New Department</a>
+              </li>
               {departments.length === 0 ?
                 <li className="collection-item">
                   There are no departments associated with this list. You may add departments when you add a new item to the list.
-                 </li>
+                </li>
                 : ''}
               {departments.map(dept => <DepartmentsList dept={dept} key={dept.id} />)}
             </ul>
           </div>
         </li>
       </ul>
+      <AddDepartmentModal currentListID={currentListID} />
     </div>
   )
 }

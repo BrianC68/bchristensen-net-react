@@ -17,7 +17,7 @@ const AddDepartmentModal = ({ addDepartment, currentListID }) => {
         shopping_list: currentListID
       }
       addDepartment(data);
-      M.toast({ html: `<strong>${department} has been added to the select list</strong>`, displayLength: 6000, classes: "amber black-text" })
+      M.toast({ html: `<strong>${department} has been added to Departments</strong>`, displayLength: 6000, classes: "amber black-text" })
       setDepartment('');
     }
   }

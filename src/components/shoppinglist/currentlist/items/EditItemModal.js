@@ -55,11 +55,11 @@ const EditItemModal = ({ departments, currentListItem, updateItem }) => {
         <div className="input-field col s12">
           <select
             name="department"
-            value={department}
+            value={!department ? '' : department}
             className="browser-default"
             onChange={e => setDepartment(e.target.value)}
           >
-            <option value="" disabled>Select Department or...</option>
+            <option value="" disabled>Select Department</option>
             {departments.map(dept => <DepartmentOption department={dept} key={dept.id} />)}
           </select>
         </div>

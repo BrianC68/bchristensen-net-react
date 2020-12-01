@@ -42,7 +42,7 @@ const CurrentListItem = ({ currentListItem, departments, currentListID, removeIt
           <EditItemModal departments={departments} currentListItem={currentListItem} />
         </div>
         <div className="col s2 m1">
-          <a href="#!" onClick={onRemoveFromList}><i className="fas fa-trash-alt fa-lg indigo-text"></i></a>
+          <a href="#!" onClick={onRemoveFromList}><i className="far fa-check-square fa-lg indigo-text"></i></a>
         </div>
       </div>
     </li>

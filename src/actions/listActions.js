@@ -4,6 +4,9 @@ import {
   GET_LISTS,
   GET_LIST,
   DELETE_LIST,
+  SORT_LIST,
+  GROUP_LIST_BY_DEPT,
+  SET_SORT_ORDER,
   ADD_ITEM,
   ADD_SAVED_ITEM,
   EDIT_ITEM,
@@ -96,6 +99,26 @@ export const deleteList = id => async dispatch => {
       payload: err.response.data
     });
   }
+}
+
+export const sortList = (sortBy) => dispatch => {
+  if (sortBy === 'item') {
+    dispatch({
+      type: SORT_LIST,
+      // payload: sortBy
+    })
+  } else {
+    dispatch({
+      type: GROUP_LIST_BY_DEPT,
+    })
+  }
+}
+
+export const setSortOrder = (sortOrder) => dispatch => {
+  dispatch({
+    type: SET_SORT_ORDER,
+    payload: sortOrder
+  })
 }
 
 export const addItem = data => async dispatch => {

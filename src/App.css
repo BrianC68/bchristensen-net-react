@@ -70,6 +70,18 @@
     padding-left: 3px !important;
 }
 
+.fa-check-square {
+    padding-top: 5px;
+}
+
+.fa-sort,
+.fa-object-group {
+    font-size: 1.5rem;
+    position: relative;
+    top: 3px;
+    margin-left: 10px;
+}
+
 .shopping-list-btn-div {
     margin: 20px 0px;
     text-align: center;
@@ -104,6 +116,11 @@
 }
 
 @media (max-width: 500px) {
+    .container {
+        /* margin-left: 5px;
+        margin-right: 5px; */
+        width: 95%;
+    }
     .nav-logo {
         display: none;
     }
@@ -134,4 +151,8 @@
         font-size: 1.3rem;
     }
 
+    .fa-sort,
+    .fa-object-group {
+        margin-left: 3px;
+    }
 }
