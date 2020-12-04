@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import { removeItemFromList } from '../../../actions/listActions';
 import EditItemModal from './items/EditItemModal';
 
@@ -12,6 +13,10 @@ const CurrentListItem = ({ currentListItem, departments, currentListID, removeIt
       let dept = departments.filter(dept => dept.id === id)
       return dept[0].name;
     }
+  }
+
+  const showAddedByToast = () => {
+    M.toast({ html: `<strong>${currentListItem.item} was added by ${currentListItem.added_by}</strong>`, classes: 'amber black-text' })
   }
 
   const onRemoveFromList = () => {
@@ -31,11 +36,14 @@ const CurrentListItem = ({ currentListItem, departments, currentListID, removeIt
         <div className="col s3 m4">
           {currentListItem.item}
         </div>
-        <div className="col s2">
+        <div className="col s2 m1">
           {currentListItem.quantity}
         </div>
         <div className="col s3 m4">
           {getDeptName(currentListItem.department)}
+        </div>
+        <div className="col s2 m1 item-added-by">
+          <a href="#!" onClick={showAddedByToast}><i className="far fa-user fa-lg indigo-text"></i></a>
         </div>
         <div className="col s2 m1">
           <a href={`#edit-item-modal-${currentListItem.id}`} className="modal-trigger"><i className="far fa-edit fa-lg indigo-text"></i></a>

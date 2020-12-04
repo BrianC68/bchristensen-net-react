@@ -12,7 +12,7 @@ const ShoppingListsItem = ({ list, getList, setLoading }) => {
     <div>
       <div className="shopping-list-btn-div">
         <a href="#!" onClick={onGetList} className="indigo btn-large waves-effect waves-light">
-          {list.name}
+          {list.name} {list.user !== parseInt(localStorage.getItem('user_id')) ? `(${list.list_owner})` : ''}
         </a>
       </div>
     </div>

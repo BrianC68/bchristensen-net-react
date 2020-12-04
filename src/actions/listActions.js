@@ -5,6 +5,7 @@ import {
   GET_LIST,
   DELETE_LIST,
   SORT_LIST,
+  SHARE_LIST,
   GROUP_LIST_BY_DEPT,
   SET_SORT_ORDER,
   ADD_ITEM,
@@ -18,8 +19,9 @@ import {
   CLEAR_CURRENT,
   LISTS_ERROR,
   CLEAR_LISTS_ERROR,
+  CLEAR_LISTS_MESSAGE,
   CLEAR_LISTS,
-  SET_LOADING
+  SET_LOADING,
 } from '../actions/types';
 
 const jsonHeader = {
@@ -87,7 +89,7 @@ export const getList = id => async dispatch => {
 export const deleteList = id => async dispatch => {
   // Permanently delete a list
   try {
-    await axios.delete(`${apiServer}/api/shopping-list/${id}`);
+    await axios.delete(`${apiServer}/api/shopping-list/${id}/`);
 
     dispatch({
       type: DELETE_LIST,
@@ -111,6 +113,25 @@ export const sortList = (sortBy) => dispatch => {
     dispatch({
       type: GROUP_LIST_BY_DEPT,
     })
+  }
+}
+
+export const shareList = (list, message) => async dispatch => {
+  // Shares the shopping list with the user passed in data
+  try {
+    const res = await axios.put(`${apiServer}/api/shopping-list/${list.id}/`, list, jsonHeader);
+
+    dispatch({
+      type: SHARE_LIST,
+      payload: res.data,
+      message: message
+
+    });
+  } catch (err) {
+    dispatch({
+      type: LISTS_ERROR,
+      payload: err.response.data.non_field_errors[0]
+    });
   }
 }
 
@@ -150,6 +171,7 @@ export const addSavedItem = data => async dispatch => {
       payload: res.data
     });
   } catch (err) {
+    // console.error(err.response.data);
     dispatch({
       type: LISTS_ERROR,
       payload: err.response.data
@@ -268,6 +290,12 @@ export const clearLists = () => dispatch => {
 export const clearListsError = () => dispatch => {
   dispatch({
     type: CLEAR_LISTS_ERROR,
+  })
+}
+
+export const clearListsMessage = () => dispatch => {
+  dispatch({
+    type: CLEAR_LISTS_MESSAGE,
   })
 }
 

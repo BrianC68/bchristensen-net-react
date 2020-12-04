@@ -7,6 +7,12 @@
     text-transform: none;
 }
 
+.btn-back,
+.btn-share,
+.btn-delete {
+    width: 75%;
+}
+
 .fa-list-ul {
     margin-right: 0px;
 }
@@ -40,7 +46,12 @@
     height: 320px;
 }
 
-.edit-item-modal {
+.share-user {
+    margin: 0 8px;
+}
+
+.edit-item-modal,
+#share-modal {
     height: 350px;
 }
 
@@ -115,6 +126,13 @@
     align-items: center;
 }
 
+@media (max-width: 600px) {
+
+    .item-added-by {
+        display: none;
+    }
+}
+
 @media (max-width: 500px) {
     .container {
         /* margin-left: 5px;
@@ -128,6 +146,12 @@
     .login-btn a,
     .register-btn a {
     width: 100%;
+    }
+
+    .btn-back,
+    .btn-share,
+    .btn-delete {
+        width: 100%;
     }
     
     .shopping-list-btn-div a {
@@ -147,7 +171,7 @@
         font-size: 1.5rem;
     }
 
-    h4 {
+    h4, h5 {
         font-size: 1.3rem;
     }
 

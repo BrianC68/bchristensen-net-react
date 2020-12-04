@@ -4,6 +4,7 @@ import {
   GET_LIST,
   DELETE_LIST,
   SORT_LIST,
+  SHARE_LIST,
   GROUP_LIST_BY_DEPT,
   ADD_ITEM,
   ADD_SAVED_ITEM,
@@ -19,6 +20,7 @@ import {
   CLEAR_LISTS,
   SET_LOADING,
   SET_SORT_ORDER,
+  CLEAR_LISTS_MESSAGE,
 } from '../actions/types';
 
 const initialState = {
@@ -27,6 +29,7 @@ const initialState = {
   currentList: null,
   loading: true,
   sort_order: '',
+  message: '',
 }
 
 const list = (state = initialState, action) => {
@@ -85,6 +88,15 @@ const list = (state = initialState, action) => {
             return 0;
           })
         }
+      }
+    case SHARE_LIST:
+      return {
+        ...state,
+        currentList: {
+          ...state.currentList,
+          shares: action.payload.shares
+        },
+        message: action.message,
       }
     case GROUP_LIST_BY_DEPT:
       return {
@@ -233,6 +245,11 @@ const list = (state = initialState, action) => {
       return {
         ...state,
         error: ''
+      }
+    case CLEAR_LISTS_MESSAGE:
+      return {
+        ...state,
+        message: ''
       }
     case SET_LOADING:
       return {

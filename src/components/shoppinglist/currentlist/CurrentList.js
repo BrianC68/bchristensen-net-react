@@ -1,16 +1,25 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import M from 'materialize-css/dist/js/materialize.min.js';
 import PropTypes from 'prop-types';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import CurrentListItem from './CurrentListItem';
 import AddItemCollapse from './items/AddItemCollapse';
-import { clearCurrent, deleteList, sortList, setSortOrder } from '../../../actions/listActions';
+import ShareModal from './ShareModal';
+import { clearCurrent, deleteList, sortList, setSortOrder, clearListsError, clearListsMessage } from '../../../actions/listActions';
 
-const CurrentList = ({ currentList, clearCurrent, deleteList, sortList, sort_order, setSortOrder }) => {
+const CurrentList = ({ currentList, clearCurrent, deleteList, sortList, sort_order, setSortOrder, error, clearListsError, message, clearListsMessage }) => {
   useEffect(() => {
-    M.AutoInit();
-  })
+    if (error !== '') {
+      M.toast({ html: `<strong>${error}</strong>`, displayLength: 6000, classes: "red lighten-3 black-text" });
+      clearListsError();
+    }
+
+    if (message !== '') {
+      M.toast({ html: `<strong>${message}</strong>`, displayLength: 6000, classes: "amber black-text" });
+      clearListsMessage();
+    }
+  }, [error, clearListsError, message, clearListsMessage])
 
   // Filter out items that are already on the list
   const savedItems = currentList.list_items.filter(item => !item.on_list);
@@ -39,9 +48,17 @@ const CurrentList = ({ currentList, clearCurrent, deleteList, sortList, sort_ord
 
   return (
     <div>
-      <div>
-        <Link to="/shopping-list-api/" onClick={clearCurrentList} className="btn indigo">Back to Lists</Link>
-        <a href="#!" onClick={onDeleteList} className="btn red darken-4 right">Delete List <i className="fal fa-trash-alt"></i></a>
+      <div className="row">
+        <div className="col s4">
+          <Link to="/shopping-list-api/" onClick={clearCurrentList} className="btn btn-back indigo">Back</Link>
+        </div>
+        <div className="col s4 center-align">
+          {currentList.user === parseInt(localStorage.getItem('user_id')) ? <a href="#share-modal" className="btn btn-share amber darken-4 modal-trigger">Share</a> : ''}
+          <ShareModal currentList={currentList} />
+        </div>
+        <div className="col s4">
+          {currentList.user === parseInt(localStorage.getItem('user_id')) ? <a href="#!" onClick={onDeleteList} className="btn btn-delete red darken-4 right">Delete</a> : ''}
+        </div>
       </div>
       <ul className="collection with-header">
         <li className="collection-header">
@@ -50,13 +67,17 @@ const CurrentList = ({ currentList, clearCurrent, deleteList, sortList, sort_ord
         <li className="collection-item">
           <div className="row">
             <div className="col s3 m4">
-              <strong>Item</strong> <a href="#!" className="indigo-text" onClick={() => onSortList('item')}><i className="fal fa-sort fa-lg"></i></a>
+              <strong>Item</strong> <a href="#!" className="indigo-text" onClick={() => onSortList('item')}>
+                <i className="fal fa-sort fa-lg"></i>
+              </a>
             </div>
-            <div className="col s2">
+            <div className="col s2 m1">
               <strong>Qty</strong>
             </div>
             <div className="col s5 m4">
-              <strong>Dept.</strong> <a href="#!" className="indigo-text" onClick={() => onSortList('dept')}><i className="fal fa-object-group fa-lg"></i></a>
+              <strong>Dept.</strong> <a href="#!" className="indigo-text" onClick={() => onSortList('dept')}>
+                <i className="fal fa-object-group fa-lg"></i>
+              </a>
             </div>
           </div>
         </li>
@@ -76,12 +97,16 @@ CurrentList.propTypes = {
   clearCurrent: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
   sortList: PropTypes.func.isRequired,
-  // setSortBy: PropTypes.func.isRequired,
   setSortOrder: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  message: PropTypes.string,
+  clearListsMessage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-  sort_order: state.list.sort_order
-})
+  sort_order: state.list.sort_order,
+  error: state.list.error,
+  message: state.list.message,
+});
 
-export default connect(mapStateToProps, { clearCurrent, deleteList, sortList, setSortOrder })(CurrentList);
+export default connect(mapStateToProps, { clearCurrent, deleteList, sortList, setSortOrder, clearListsError, clearListsMessage })(CurrentList);

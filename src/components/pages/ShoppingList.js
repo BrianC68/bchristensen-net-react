@@ -47,12 +47,6 @@ const ShoppingList = ({ isAuthenticated, loadUser, message, error, loading, clea
             }
           </Fragment>
         }
-        {/* {isAuthenticated ? '' : <LoginBtn />}
-        {isAuthenticated ? '' : <LoginModal />}
-        {isAuthenticated ? '' : <RegisterBtn />}
-        {isAuthenticated ? '' : <RegisterModal />} */}
-        {/* Content shown when user is logged in */}
-
       </div>
     </Fragment>
   )

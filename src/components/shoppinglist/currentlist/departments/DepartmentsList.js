@@ -18,11 +18,18 @@ const DepartmentsList = ({ dept, deleteDepartment }) => {
     }
   }
 
+  const showAddedByToast = () => {
+    M.toast({ html: `<strong>${dept.name} was added by ${dept.added_by}</strong>`, classes: 'amber black-text' })
+  }
+
   return (
     <li className="collection-item">
       <div className="row">
-        <div className="col s8 m10">
+        <div className="col s6 m9">
           {dept.name}
+        </div>
+        <div className="col s2 m1">
+          <a href="#!" onClick={showAddedByToast}><i className="far fa-user fa-lg indigo-text"></i></a>
         </div>
         <div className="col s2 m1">
           <a href={`#edit-dept-modal-${dept.id}`} className="modal-trigger">

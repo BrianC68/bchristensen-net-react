@@ -1,25 +1,17 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import M from 'materialize-css/dist/js/materialize.min.js';
+// import M from 'materialize-css/dist/js/materialize.min.js';
 import { getLists } from '../../actions/listActions';
 import ShoppingListsItem from './ShoppingListsItem';
 import NewListModal from './NewListModal';
 import CurrentList from './currentlist/CurrentList';
 import Preloader from '../layout/Preloader';
-import { clearListsError } from '../../actions/listActions';
 
-const ShoppingLists = ({ list: { lists, error, currentList, loading }, getLists, clearListsError }) => {
+const ShoppingLists = ({ list: { lists, currentList, loading }, getLists }) => {
   useEffect(() => {
     getLists();
-
-    if (error !== '') {
-      if (error.non_field_errors) {
-        M.toast({ html: `<strong>${error.non_field_errors}</strong>`, displayLength: 6000, classes: "red lighten-3 black-text" })
-      }
-      clearListsError();
-    }
-  }, [getLists, clearListsError, error]);
+  }, [getLists]);
 
   if (loading) {
     return <Preloader />
@@ -46,7 +38,9 @@ ShoppingLists.propTypes = {
   getLists: PropTypes.func.isRequired,
   list: PropTypes.object.isRequired,
   error: PropTypes.object,
-  clearListsError: PropTypes.func.isRequired,
+  message: PropTypes.string,
+  // clearListsError: PropTypes.func.isRequired,
+  // clearListsMessage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -54,4 +48,4 @@ const mapStateToProps = state => ({
   loading: state.loading,
 });
 
-export default connect(mapStateToProps, { getLists, clearListsError })(ShoppingLists);
+export default connect(mapStateToProps, { getLists })(ShoppingLists);

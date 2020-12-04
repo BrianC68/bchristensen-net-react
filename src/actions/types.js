@@ -17,6 +17,7 @@ export const LISTS_ERROR = 'LISTS_ERROR';
 export const ADD_LIST = 'ADD_LIST';
 export const DELETE_LIST = 'DELETE_LIST';
 export const GET_LIST = 'GET_LIST';
+export const SHARE_LIST = 'SHARE_LIST';
 export const SORT_LIST = 'SORT_LIST';
 export const GROUP_LIST_BY_DEPT = 'GROUP_LIST_BY_DEPT';
 export const SET_SORT_ORDER = 'SET_SORT_ORDER';
@@ -32,5 +33,5 @@ export const EDIT_ITEM = 'EDIT_ITEM';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 export const CLEAR_LISTS = 'CLEAR_LISTS';
 export const CLEAR_LISTS_ERROR = 'CLEAR_LISTS_ERROR';
-
+export const CLEAR_LISTS_MESSAGE = 'CLEAR_LISTS_MESSAGE';
 export const SET_LOADING = 'SET_LOADING';

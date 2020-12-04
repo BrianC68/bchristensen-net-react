@@ -7,7 +7,7 @@ import SavedItemsList from './SavedItemsList';
 import AddDepartmentModal from '../departments/AddDepartmentModal';
 import DepartmentsList from '../departments/DepartmentsList'
 
-const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) => {
+const AddItemCollapse = ({ departments, currentListID, currentListUser, addItem, savedItems }) => {
   const [item, setItem] = useState('');
   const [quantity, setQuantity] = useState('');
   const [department, setDepartment] = useState('');
@@ -23,7 +23,7 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
       M.toast({ html: '<strong>Please enter quantity!</strong>', displayLength: 6000, classes: "red lighten-3 black-text" });
     } else {
       const newItem = {
-        user: localStorage.getItem('user_id'),
+        user: currentListUser,
         shopping_list: currentListID,
         item: item,
         quantity: quantity,
@@ -122,6 +122,7 @@ const AddItemCollapse = ({ departments, currentListID, addItem, savedItems }) =>
 
 const mapStateToProps = state => ({
   currentListID: state.list.currentList.id,
+  currentListUser: state.list.currentList.user,
   // error: state.list.error
 })
 
