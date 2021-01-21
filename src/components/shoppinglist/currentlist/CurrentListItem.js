@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import M from 'materialize-css/dist/js/materialize.min.js';
-import { removeItemFromList } from '../../../actions/listActions';
+import { removeItemFromList, setLoading } from '../../../actions/listActions';
 import EditItemModal from './items/EditItemModal';
 
 const CurrentListItem = ({ currentListItem, departments, currentListID, removeItemFromList }) => {
@@ -25,7 +25,9 @@ const CurrentListItem = ({ currentListItem, departments, currentListID, removeIt
       shopping_list: currentListID,
       item: currentListItem.item,
       on_list: false,
+      notifications: false,
     }
+    setLoading();
     removeItemFromList(data, currentListItem.id);
     // console.log(data);
   }

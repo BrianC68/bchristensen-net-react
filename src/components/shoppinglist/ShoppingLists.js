@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import M from 'materialize-css/dist/js/materialize.min.js';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import { getLists } from '../../actions/listActions';
 import ShoppingListsItem from './ShoppingListsItem';
 import NewListModal from './NewListModal';
@@ -10,6 +10,7 @@ import Preloader from '../layout/Preloader';
 
 const ShoppingLists = ({ list: { lists, currentList, loading }, getLists }) => {
   useEffect(() => {
+    M.AutoInit();
     getLists();
   }, [getLists]);
 

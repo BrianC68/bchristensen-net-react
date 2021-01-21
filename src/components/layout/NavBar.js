@@ -47,7 +47,7 @@ const NavBar = ({ logout, isAuthenticated, clearCurrent, clearLists }) => {
             </span>
             <span className="amber-text">.net</span>
           </Link>
-          <a href="#!" data-target="mobile-side-nav" className="sidenav-trigger amber-text"><i className="material-icons">menu</i></a>
+          <a href="#!" data-target="mobile-side-nav" className="sidenav-trigger amber-text"><i class="far fa-bars fa-3x"></i></a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><Link to="/shopping-list-api/" className="amber-text">Shopping List API</Link></li>
             <li><a href="#!" className="amber-text">Experience</a></li>

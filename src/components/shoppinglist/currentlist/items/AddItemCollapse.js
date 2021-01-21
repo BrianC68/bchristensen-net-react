@@ -7,14 +7,19 @@ import SavedItemsList from './SavedItemsList';
 import AddDepartmentModal from '../departments/AddDepartmentModal';
 import DepartmentsList from '../departments/DepartmentsList'
 
-const AddItemCollapse = ({ departments, currentListID, currentListUser, addItem, savedItems }) => {
+const AddItemCollapse = ({ departments, currentListID, currentListUser, currentListShares, addItem, savedItems }) => {
   const [item, setItem] = useState('');
   const [quantity, setQuantity] = useState('');
   const [department, setDepartment] = useState('');
+  const [notifications, setNotifications] = useState(false);
 
   useEffect(() => {
     M.AutoInit();
-  })
+  });
+
+  const onSetNotifications = (value) => {
+    setNotifications(value);
+  };
 
   const onAddItem = () => {
     if (item === '') {
@@ -27,7 +32,8 @@ const AddItemCollapse = ({ departments, currentListID, currentListUser, addItem,
         shopping_list: currentListID,
         item: item,
         quantity: quantity,
-        department: department
+        department: department,
+        notifications: notifications,
       }
       addItem(newItem);
       setItem('');
@@ -38,6 +44,16 @@ const AddItemCollapse = ({ departments, currentListID, currentListUser, addItem,
 
   return (
     <div>
+      {currentListShares.length > 0 ?
+        <div class="switch" style={{ paddingLeft: 20 }}>
+          <label>
+            Send Notifications
+                <input type="checkbox" onChange={() => onSetNotifications(!notifications)}></input>
+            <span class="lever"></span>
+          </label>
+        </div>
+        : ''
+      }
       <ul className="collapsible">
         {/* Saved Items */}
         <li>
@@ -49,7 +65,7 @@ const AddItemCollapse = ({ departments, currentListID, currentListUser, addItem,
                   Click &quot;Add New Item&quot; to add an item to your list, it will automatically be saved. Saved items that are
                   currently on your list will not appear here until they are removed from your list.
                 </li> : ''}
-              {savedItems.map(item => (<SavedItemsList item={item} key={item.id} />))}
+              {savedItems.map(item => (<SavedItemsList item={item} key={item.id} notifications={notifications} />))}
             </ul>
           </div>
         </li>
@@ -123,6 +139,7 @@ const AddItemCollapse = ({ departments, currentListID, currentListUser, addItem,
 const mapStateToProps = state => ({
   currentListID: state.list.currentList.id,
   currentListUser: state.list.currentList.user,
+  currentListShares: state.list.currentList.shares,
   // error: state.list.error
 })
 

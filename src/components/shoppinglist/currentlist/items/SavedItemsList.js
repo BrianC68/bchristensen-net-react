@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSavedItem, deleteItem } from '../../../../actions/listActions';
 
-const SavedItemsList = ({ addSavedItem, item, deleteItem }) => {
+const SavedItemsList = ({ addSavedItem, item, deleteItem, notifications }) => {
   const onAddToList = () => {
     item.on_list = true;
+    item.notifications = notifications;
     const data = item;
 
     addSavedItem(data);

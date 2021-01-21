@@ -30,8 +30,8 @@ const jsonHeader = {
   }
 }
 
-// const apiServer = 'http://127.0.0.1:8000';
-const apiServer = 'https://api.bchristensen.net';
+const apiServer = 'http://127.0.0.1:8000';
+// const apiServer = 'https://api.bchristensen.net';
 
 
 export const getLists = () => async dispatch => {

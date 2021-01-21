@@ -14,8 +14,8 @@ import {
   SET_AUTH_LOADING,
 } from '../actions/types';
 
-// const apiServer = 'http://localhost:8000';
-const apiServer = 'https://api.bchristensen.net';
+const apiServer = 'http://localhost:8000';
+// const apiServer = 'https://api.bchristensen.net';
 
 export const loadUser = () => async dispatch => {
   // if (localStorage.token) {
@@ -65,7 +65,7 @@ export const login = (credentials) => async dispatch => {
 
   try {
     const res = await axios.post(`${apiServer}/api/users/auth/token/`, JSON.stringify(credentials), config);
-
+    console.log(res.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data

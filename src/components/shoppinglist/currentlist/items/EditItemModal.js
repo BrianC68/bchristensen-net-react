@@ -23,7 +23,8 @@ const EditItemModal = ({ departments, currentListItem, updateItem }) => {
       item: item,
       quantity: quantity,
       department: department,
-      on_list: true
+      on_list: true,
+      notifications: false,
     }
     // console.log(data)
 
